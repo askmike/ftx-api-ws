@@ -1,4 +1,4 @@
-# ftx-api-rest
+# ftx-api-ws
 
     npm install ftx-api-ws
 

@@ -10,14 +10,19 @@ const PONG = '{"type": "error", "code": 400, "msg": "Invalid operation"}';
 
 const STALE_TIMEOUT = 2000;
 
+// this endpoint is used by the sample code on
+// https://github.com/ftexchange/ftx/blob/d387304bcc6f479e0ecae8273ad84eda986f5237/websocket/client.py#L13
+const DEFAULT_ENDPOINT = 'ftx.com/ws/';
+
+// pass optional params: { key, secret, subaccount, endpoint }
 class Connection extends EventEmitter {
-  constructor({key, secret, subaccount = undefined, endpoint = 'ftx.com/ws/'}) {
+  constructor(conf = {}) {
     super();
 
-    this.key = key;
-    this.secret = secret;
-    this.subaccount = subaccount;
-    this.WSendpoint = endpoint;
+    this.key = conf.key;
+    this.secret = conf.secret;
+    this.subaccount = conf.subaccount;
+    this.WSendpoint = conf.endpoint || DEFAULT_ENDPOINT;
 
     this.connected = false;
     this.isReadyHook = false;
@@ -152,7 +157,7 @@ class Connection extends EventEmitter {
 
     if(payload.type === 'subscribed') {
       this.subscriptions.forEach(sub => {
-        if(sub.market === payload.market && sub.channel && payload.channel) {
+        if(sub.market === payload.market && sub.channel === payload.channel) {
           sub.doneHook();
         }
       });
@@ -161,6 +166,10 @@ class Connection extends EventEmitter {
     else if(payload.type === 'update') {
       const id = this.toId(payload.market, payload.channel);
       this.emit(id, payload.data);
+    }
+
+    else {
+      console.log(new Date, '[FTX] unhandled WS event', payload);
     }
   }
 

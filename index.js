@@ -138,8 +138,6 @@ class Connection extends EventEmitter {
       }
     }
 
-    console.log('sending', message);
-
     this.sendMessage(message);
 
     this.authenticated = true;

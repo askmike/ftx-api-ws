@@ -15,6 +15,10 @@ const go = async () => {
 
   ftx.subscribe('ticker', 'BTC-PERP');
   ftx.on('BTC-PERP::ticker', console.log);
+
+  // if you passed api credentials:
+  ftx.subscribe('fills');
+  ftx.on('fills', console.log);
 }
 
 go();

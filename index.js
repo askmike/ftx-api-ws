@@ -128,14 +128,19 @@ class Connection extends EventEmitter {
     const signature = crypto.createHmac('sha256', this.secret)
       .update(date + 'websocket_login').digest('hex');
 
-    this.sendMessage({
+    const message = {
       op: 'login',
       args: {
         key: this.key,
         sign: signature,
-        time: date
+        time: date,
+        subaccount: this.subaccount
       }
-    });
+    }
+
+    console.log('sending', message);
+
+    this.sendMessage(message);
 
     this.authenticated = true;
   }
@@ -144,7 +149,7 @@ class Connection extends EventEmitter {
     this.lastMessageAt = +new Date;
     let payload;
 
-    if(e.data === PONG && new Date - this.pingAt < 5000) {
+    if(e.data === PONG && this.lastMessageAt - this.pingAt < 5000) {
       this.pongAt = this.lastMessageAt;
       return;
     }
@@ -174,6 +179,10 @@ class Connection extends EventEmitter {
   }
 
   toId(market, channel) {
+    if(!market) {
+      return channel;
+    }
+
     return market + '::' + channel;
   }
 

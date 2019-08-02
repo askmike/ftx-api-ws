@@ -53,11 +53,11 @@ class Connection extends EventEmitter {
       }
 
       this.ws.onerror = e => {
-        console.log(new Date, '[FTX] WS ERROR', e);
+        console.log(new Date, '[FTX] WS ERROR', e.message);
       }
 
       this.ws.onclose = async e => {
-        console.log(new Date, '[FTX] CLOSED CON', e);
+        console.log(new Date, '[FTX] CLOSED CON');
         this.authenticated = false;
         this.connected = false;
 
@@ -79,6 +79,8 @@ class Connection extends EventEmitter {
 
   reconnect = async () => {
     this.reconnecting = true;
+    this.pingAt = false;
+    this.pongAt = false;
 
     let hook;
     this.afterReconnect = new Promise(r => hook = r);

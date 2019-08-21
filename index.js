@@ -4,9 +4,7 @@ const crypto = require('crypto');
 
 const wait = n => new Promise(r => setTimeout(r, n));
 
-// well, there is no actual pong... but we need to make sure
-// the connection is alive anyway...
-const PONG = '{"type": "error", "code": 400, "msg": "Invalid operation"}';
+const PONG = '{"op": "pong"}';
 
 const STALE_TIMEOUT = 2000;
 

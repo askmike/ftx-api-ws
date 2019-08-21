@@ -19,9 +19,7 @@ See sample.js.
 
 ## TODO
 
-- Better heartbeat (I've asked FTX for how to ping/pong).
-- Make sure reconnect & stale detection works.
-- Test
+- More testing
 
 ## Final
 

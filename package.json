@@ -1,6 +1,6 @@
 {
   "name": "ftx-api-ws",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "light wrapper for ftx websocket api",
   "main": "index.js",
   "scripts": {

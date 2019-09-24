@@ -166,7 +166,7 @@ class Connection extends EventEmitter {
       });
     }
 
-    else if(payload.type === 'update') {
+    else if(payload.type === 'update' || payload.type === 'partial') {
       const id = this.toId(payload.market, payload.channel);
       this.emit(id, payload.data);
     }

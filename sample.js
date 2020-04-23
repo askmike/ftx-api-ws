@@ -19,6 +19,9 @@ const go = async () => {
   // if you passed api credentials:
   ftx.subscribe('fills');
   ftx.on('fills', console.log);
+
+  // if you want to know when the status of underlying socket changes
+  ftx.on('statusChange', console.log);
 }
 
 go();

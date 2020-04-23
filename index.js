@@ -56,6 +56,7 @@ class Connection extends EventEmitter {
 
       this.ws.onclose = async e => {
         console.log(new Date, '[FTX] CLOSED CON');
+        this.emit('statusChange', 'close');
         this.authenticated = false;
         this.connected = false;
 
@@ -96,6 +97,7 @@ class Connection extends EventEmitter {
 
   connect = async () => {
     await this._connect();
+    this.emit('statusChange', 'open');
     if(this.key) {
       this.authenticate();
     }

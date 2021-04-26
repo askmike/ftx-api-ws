@@ -46,6 +46,8 @@ class Connection extends EventEmitter {
       this.ws.onopen = () => {
         this.connected = true;
 
+        this.heartbeat = setInterval(this.ping, 5 * 1000);
+
         this.isReadyHook();
         resolve();
       }
@@ -64,8 +66,6 @@ class Connection extends EventEmitter {
 
         this.reconnect();
       }
-
-      this.heartbeat = setInterval(this.ping, 5 * 1000);
     });
   }
 

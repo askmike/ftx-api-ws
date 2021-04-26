@@ -99,7 +99,7 @@ class Connection extends EventEmitter {
     await this._connect();
     this.emit('statusChange', 'open');
     if(this.key) {
-      this.authenticate();
+      await this.authenticate();
     }
   }
 
@@ -189,7 +189,7 @@ class Connection extends EventEmitter {
   sendMessage = async (payload) => {
     if(!this.connected) {
       if(!this.reconnecting) {
-        throw new Error('Not connected.')
+        throw new Error('[ftx ws] Not connected.');
       }
 
       await this.afterReconnect;
@@ -204,7 +204,7 @@ class Connection extends EventEmitter {
 
     if(!this.connected) {
       if(!this.reconnecting) {
-        throw new Error('Not connected.')
+        throw new Error('[ftx ws] Not connected.');
       }
 
       await this.afterReconnect;

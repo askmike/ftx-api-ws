@@ -46,6 +46,7 @@ class Connection extends EventEmitter {
       this.ws.onopen = () => {
         this.connected = true;
 
+        clearTimeout(this.openTimeout);
         this.heartbeat = setInterval(this.ping, 5 * 1000);
 
         this.isReadyHook();
@@ -66,6 +67,10 @@ class Connection extends EventEmitter {
 
         this.reconnect();
       }
+
+      this.openTimeout = setTimeout(() => {
+        throw new Error('[ftx ws] could not establish connection within 15 seconds.')
+      }, 1000 * 15);
     });
   }
 

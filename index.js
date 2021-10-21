@@ -114,7 +114,7 @@ class Connection extends EventEmitter {
       return this.terminate();
     }
 
-    this.pingAt = +new Date;
+    this.pingAt = Date.now();
     this.sendMessage({op: 'ping'});
   }
 
@@ -126,7 +126,7 @@ class Connection extends EventEmitter {
       await this.connect();
     }
 
-    const date = +new Date;
+    const date = Date.now();
     const signature = crypto.createHmac('sha256', this.secret)
       .update(date + 'websocket_login').digest('hex');
 
@@ -146,7 +146,7 @@ class Connection extends EventEmitter {
   }
 
   handleWSMessage = e => {
-    this.lastMessageAt = +new Date;
+    this.lastMessageAt = Date.now();
     let payload;
 
     if(e.data === PONG && this.lastMessageAt - this.pingAt < 5000) {

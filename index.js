@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 const wait = n => new Promise(r => setTimeout(r, n));
 
-const PONG = '{"type": "pong"}';
+const PONG = '{"type":"pong"}';
 
 const STALE_TIMEOUT = 2000;
 
